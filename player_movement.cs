@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
             moveDirection.z = -moveDistance * Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)) // tere is differance for this case its single tap other for continuew motion
         {
             moveDirection.y = moveDistance * jumpMultiplier * Time.deltaTime;
         }
