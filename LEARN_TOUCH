@@ -1,0 +1,85 @@
+using UnityEngine;
+
+public class TouchInputHandler : MonoBehaviour
+{
+    void Update()
+    {
+        // Call the method to handle touch input
+        HandleTouchInput();
+    }
+
+    void HandleTouchInput()
+    {
+        // Check if there are any touches on the screen
+        if (Input.touchCount > 0)
+        {
+            // Get the first touch
+            Touch touch = Input.GetTouch(0);
+
+            // Description: Represents the current position of the touch in screen coordinates.
+            // Use Case: To get the location where the touch is occurring on the screen.
+            Vector2 touchPosition = touch.position;
+            Debug.Log("Touch position: " + touchPosition);
+
+            // Description: Represents the change in position of the touch from the previous frame.
+            // Use Case: Useful for detecting swipe gestures or the velocity of touch movements.
+            Vector2 swipeDelta = touch.deltaPosition;
+            if (swipeDelta.magnitude > 0)
+            {
+                Debug.Log("Swipe detected with delta: " + swipeDelta);
+            }
+
+            // Description: Represents the phase of the touch event (e.g., Began, Moved, Stationary, Ended, Canceled).
+            // Use Case: To handle different stages of touch input.
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    Debug.Log("Touch began at: " + touchPosition);
+                    break;
+                case TouchPhase.Moved:
+                    Debug.Log("Touch moved to: " + touchPosition);
+                    break;
+                case TouchPhase.Stationary:
+                    Debug.Log("Touch is stationary at: " + touchPosition);
+                    break;
+                case TouchPhase.Ended:
+                    Debug.Log("Touch ended at: " + touchPosition);
+                    break;
+                case TouchPhase.Canceled:
+                    Debug.Log("Touch canceled at: " + touchPosition);
+                    break;
+            }
+
+            // Description: The pressure of the touch on the screen (0 to 1).
+            // Use Case: To detect how hard the user is pressing on the screen.
+            float pressure = touch.pressure;
+            Debug.Log("Touch pressure: " + pressure);
+
+            // Description: The radius of the touch, in screen units.
+            // Use Case: To detect the size of the touch input area, which can be useful for multi-touch gestures.
+            float touchRadius = touch.radius;
+            Debug.Log("Touch radius: " + touchRadius);
+
+            // Description: Converts the touch position from screen coordinates to world coordinates.
+            // Use Case: To map the touch position to the game world, enabling interactions with game objects.
+            Vector3 touchWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, Camera.main.nearClipPlane));
+            Debug.Log("Touch world position: " + touchWorldPosition);
+
+            // Description: The ID assigned to the touch, which is unique for the duration of the touch.
+            // Use Case: Useful for distinguishing between multiple simultaneous touches.
+            int fingerId = touch.fingerId;
+            Debug.Log("Touch finger ID: " + fingerId);
+        }
+
+        // Description: Indicates whether the device supports touch input.
+        // Use Case: To check if touch input can be used before attempting to handle it.
+        if (Input.touchSupported)
+        {
+            Debug.Log("Touch input is supported on this device.");
+        }
+        else
+        {
+            Debug.Log("Touch input is not supported on this device.");
+        }
+    }
+}
